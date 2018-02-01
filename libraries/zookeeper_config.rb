@@ -28,8 +28,8 @@ module ZookeeperClusterCookbook
       attribute(:instance_name, kind_of: String, required: true)
       attribute(:data_dir, kind_of: String, default: '/var/lib/zookeeper')
       attribute(:client_port, kind_of: Integer, default: 2181)
-      attribute(:leader_port, kind_of: Integer, default: 2888)
-      attribute(:election_port, kind_of: Integer, default: 3888)
+      attribute(:leader_port, kind_of: String, default: '0.0.0.0:2888')
+      attribute(:election_port, kind_of: String, default: '0.0.0.0:3888')
       attribute(:ensemble, kind_of: Array, default: [], required: true)
       attribute(:properties, option_collector: true, default: {})
 
