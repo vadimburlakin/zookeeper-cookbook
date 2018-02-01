@@ -44,7 +44,7 @@ module ZookeeperClusterCookbook
         properties.merge(
           'dataDir' => data_dir,
           'leaderPort' => "0.0.0.0:#{leader_port}",
-          'clientPort' => "0.0.0.0:#{client_port}",
+          'clientPort' => client_port,
           'electionPort' => "0.0.0.0:#{election_port}").map { |kv| kv.join('=') }.concat(servers).join("\n")
       end
 
