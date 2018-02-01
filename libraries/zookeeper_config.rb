@@ -28,8 +28,8 @@ module ZookeeperClusterCookbook
       attribute(:instance_name, kind_of: String, required: true)
       attribute(:data_dir, kind_of: String, default: '/var/lib/zookeeper')
       attribute(:client_port, kind_of: Integer, default: 2181)
-      attribute(:leader_port, kind_of: String, default: '0.0.0.0:2888')
-      attribute(:election_port, kind_of: String, default: '0.0.0.0:3888')
+      attribute(:leader_port, kind_of: Integer, default: 2888)
+      attribute(:election_port, kind_of: Integer, default: 3888)
       attribute(:ensemble, kind_of: Array, default: [], required: true)
       attribute(:properties, option_collector: true, default: {})
 
@@ -43,9 +43,9 @@ module ZookeeperClusterCookbook
         servers = ensemble.map { |n| "server.#{ensemble.index(n).next}:#{n}:#{leader_port}:#{election_port}" }
         properties.merge(
           'dataDir' => data_dir,
-          'leaderPort' => leader_port,
-          'clientPort' => client_port,
-          'electionPort' => election_port).map { |kv| kv.join('=') }.concat(servers).join("\n")
+          'leaderPort' => "0.0.0.0:#{leader_port}",
+          'clientPort' => "0.0.0.0:#{client_port}",
+          'electionPort' => "0.0.0.0:#{election_port}").map { |kv| kv.join('=') }.concat(servers).join("\n")
       end
 
       action(:create) do
